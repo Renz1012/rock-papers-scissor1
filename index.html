@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(to right, #ff002b, #b93069);
+            height: 100vh;
+            justify-content: space-between;
+            padding: 20px 0;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .choices button {
+            font-size: 12rem;
+            min-width: 120px;
+            margin: 0 10px;
+            border-radius: 45px;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background-color 0.5s ease, transform 0.2s ease;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .choices button:hover {
+            background-color: rgba(233, 14, 14, 0.6);
+            transform: scale(1.1);
+        }
+
+        .result p {
+            font-size: 5rem;
+            margin: 10px 0;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #resultDisplay {
+            font-size: 8rem;
+            margin: 20px 0;
+            text-shadow: 20px 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .scoreDisplay {
+            font-size: 5rem;
+            margin: 50px 0;
+        }
+
+        .blackText {
+            color:black;
+        }
+
+        .redText {
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock-Paper-Scissors</h1>
+    <div class="choices">
+        <button onclick="playGame('rock')">✊</button>
+        <button onclick="playGame('paper')">✋</button>
+        <button onclick="playGame('scissors')">✌️</button>
+    </div>
+    <div class="result">
+        <p>Your pick: <span id="player-choice">-</span></p>
+        <p>Enemy's pick: <span id="enemy-choice">-</span></p>
+        <p id="resultDisplay">Result: <span id="game-result">-</span></p>
+    </div>
+    <div class="scoreboard">
+        <p class="scoreDisplay greenText">Player Score: <span id="playerScore">0</span></p>
+        <p class="scoreDisplay redText">Computer Score: <span id="computerScore">0</span></p>
+    </div>
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function playGame(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const emojis = {
+                'rock': '✊',
+                'paper': '✋',
+                'scissors': '✌️'
+            };
+
+            // Randomly select choice for enemy
+            const enemyChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            // Display choices
+            document.getElementById('player-choice').textContent = `${emojis[playerChoice]} (${playerChoice})`;
+            document.getElementById('enemy-choice').textContent = `${emojis[enemyChoice]} (${enemyChoice})`;
+
+            // Determine the winner
+            let result = '';
+            if (playerChoice === enemyChoice) {
+                result = "It's a tie!";
+            } else if (
+                (playerChoice === 'rock' && enemyChoice === 'scissors') ||
+                (playerChoice === 'scissors' && enemyChoice === 'paper') ||
+                (playerChoice === 'paper' && enemyChoice === 'rock')
+            ) {
+                result = 'You win!';
+                playerScore++;
+            } else {
+                result = 'You lose!';
+                computerScore++;
+            }
+
+            // Display the result
+            document.getElementById('game-result').textContent = result;
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('computerScore').textContent = computerScore;
+        }
+    </script>
+</body>
+</html>
